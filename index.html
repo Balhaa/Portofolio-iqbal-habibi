@@ -206,64 +206,116 @@
       position: absolute;
     }
 
-    /* ===== SPACE BACKGROUND (CSS-only, no canvas) ===== */
+    /* ===== SPACE BACKGROUND ===== */
     #space-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 1;
       overflow: hidden;
+      background: transparent;
     }
 
-    /* Nebula blobs */
+    /* Nebula */
     .nebula {
       position: absolute;
       border-radius: 50%;
-      filter: blur(90px);
+      filter: blur(100px);
       pointer-events: none;
+      will-change: transform;
     }
-    .nebula-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%); top: -10%; left: -10%; animation: nebula-drift1 18s ease-in-out infinite alternate; }
-    .nebula-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 70%); bottom: 0; right: -5%; animation: nebula-drift2 22s ease-in-out infinite alternate; }
-    .nebula-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%); top: 30%; left: 40%; animation: nebula-drift3 16s ease-in-out infinite alternate; }
+    .nebula-1 {
+      width: 80vw; max-width: 700px; height: 80vw; max-height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 65%);
+      top: -15%; left: -15%;
+      animation: nebula-drift1 20s ease-in-out infinite alternate;
+    }
+    .nebula-2 {
+      width: 60vw; max-width: 600px; height: 60vw; max-height: 600px;
+      background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 65%);
+      bottom: -10%; right: -10%;
+      animation: nebula-drift2 24s ease-in-out infinite alternate;
+    }
+    .nebula-3 {
+      width: 40vw; max-width: 400px; height: 40vw; max-height: 400px;
+      background: radial-gradient(circle, rgba(6,182,212,0.14) 0%, transparent 65%);
+      top: 35%; left: 42%;
+      animation: nebula-drift3 17s ease-in-out infinite alternate;
+    }
+    .nebula-4 {
+      width: 30vw; max-width: 300px; height: 30vw; max-height: 300px;
+      background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 65%);
+      top: 60%; left: 10%;
+      animation: nebula-drift1 28s ease-in-out infinite alternate-reverse;
+    }
 
-    @keyframes nebula-drift1 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(60px,40px) scale(1.08)} }
-    @keyframes nebula-drift2 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-50px,-30px) scale(1.05)} }
-    @keyframes nebula-drift3 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(30px,-50px) scale(0.95)} }
+    @keyframes nebula-drift1 {
+      0%   { transform: translate(0px, 0px) scale(1); }
+      33%  { transform: translate(40px, 20px) scale(1.05); }
+      66%  { transform: translate(-20px, 40px) scale(0.97); }
+      100% { transform: translate(60px, -30px) scale(1.08); }
+    }
+    @keyframes nebula-drift2 {
+      0%   { transform: translate(0px, 0px) scale(1); }
+      50%  { transform: translate(-50px, -25px) scale(1.06); }
+      100% { transform: translate(30px, 40px) scale(0.94); }
+    }
+    @keyframes nebula-drift3 {
+      0%   { transform: translate(0px, 0px) scale(1); }
+      100% { transform: translate(35px, -55px) scale(0.92); }
+    }
 
     /* Stars */
     .star {
       position: absolute;
       border-radius: 50%;
-      background: white;
-      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s) alternate;
+      background: #fff;
+      will-change: opacity, transform;
+      animation: star-twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite alternate;
     }
-    .star.blue  { background: #c7d8ff; }
-    .star.violet{ background: #e0d0ff; }
-    .star.cyan  { background: #c0f0ff; }
-    .star.glow  { box-shadow: 0 0 4px 1px rgba(255,255,255,0.6); }
+    .star.s-blue   { background: #bdd4ff; }
+    .star.s-violet { background: #ddd0ff; }
+    .star.s-cyan   { background: #b8f0ff; }
+    .star.s-warm   { background: #ffe8c0; }
+    .star.s-glow   { box-shadow: 0 0 3px 1px rgba(255,255,255,0.5); }
+    .star.s-glow2  { box-shadow: 0 0 6px 2px rgba(180,210,255,0.6); }
 
-    @keyframes twinkle {
-      0%   { opacity: var(--min-op, 0.15); transform: scale(1); }
-      100% { opacity: var(--max-op, 0.9);  transform: scale(1.3); }
+    @keyframes star-twinkle {
+      0%   { opacity: var(--op-min, 0.1); transform: scale(1); }
+      60%  { opacity: var(--op-max, 0.8); transform: scale(1.2); }
+      100% { opacity: var(--op-min, 0.1); transform: scale(0.9); }
     }
 
-    /* Shooting stars */
+    /* Shooting star / meteor */
     .meteor {
       position: absolute;
-      width: 2px;
-      height: var(--len, 90px);
-      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.95));
       border-radius: 999px;
-      transform-origin: top center;
-      transform: rotate(var(--rot, 135deg));
-      animation: meteor-fall var(--speed, 2.5s) linear var(--delay, 0s) infinite;
+      pointer-events: none;
+      will-change: transform, opacity;
       opacity: 0;
     }
-    @keyframes meteor-fall {
-      0%   { opacity: 0; transform: rotate(var(--rot,135deg)) translateY(0); }
-      5%   { opacity: 1; }
-      80%  { opacity: 0.6; }
-      100% { opacity: 0; transform: rotate(var(--rot,135deg)) translateY(calc(var(--travel, 300px))); }
+    /* meteor-fall keyframe injected dynamically per meteor */
+
+    /* Comet — bigger, with glowing head */
+    .comet {
+      position: absolute;
+      pointer-events: none;
+      will-change: transform, opacity;
+      opacity: 0;
+    }
+    .comet-head {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0%, rgba(180,220,255,0.9) 40%, transparent 100%);
+      box-shadow: 0 0 6px 2px rgba(180,220,255,0.8), 0 0 14px 4px rgba(120,180,255,0.4);
+    }
+    .comet-tail {
+      position: absolute;
+      top: 0; left: 50%;
+      transform-origin: top center;
+      border-radius: 999px;
     }
 
 
@@ -345,13 +397,12 @@
 </head>
 <body class="noise text-gray-100 relative">
 
-  <!-- Space Background (CSS-only) -->
+  <!-- Space Background -->
   <div id="space-bg">
-    <!-- Nebula blobs -->
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
     <div class="nebula nebula-3"></div>
-    <!-- Stars & Meteors injected by JS -->
+    <div class="nebula nebula-4"></div>
   </div>
 
   <!-- ==================== NAVBAR ==================== -->
@@ -1443,61 +1494,148 @@ function initHamburger() {
 }
 
 // ============================================================
-// SPACE ANIMATION — CSS DOM (no canvas)
+// SPACE ANIMATION — CSS DOM (stars + meteors + comets)
 // ============================================================
 function initParticles() {
   const bg = document.getElementById('space-bg');
+  const W  = window.innerWidth;
+  const H  = window.innerHeight;
+  const frag = document.createDocumentFragment();
 
-  // --- STARS ---
-  const starCount = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 3500), 220);
-  const starColors = ['', 'blue', 'violet', 'cyan'];
-  const fragment = document.createDocumentFragment();
-
-  for (let i = 0; i < starCount; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    const size = Math.random() * 2.2 + 0.4;
-    const colorClass = starColors[Math.floor(Math.random() * starColors.length)];
-    if (colorClass) s.classList.add(colorClass);
-    if (size > 1.6) s.classList.add('glow');
-
-    const dur   = (Math.random() * 4 + 2).toFixed(1) + 's';
-    const delay = (Math.random() * 6).toFixed(2) + 's';
-    const minOp = (Math.random() * 0.15 + 0.05).toFixed(2);
-    const maxOp = (Math.random() * 0.6 + 0.35).toFixed(2);
-
-    s.style.cssText = `
-      width:${size}px; height:${size}px;
-      top:${(Math.random()*100).toFixed(2)}%;
-      left:${(Math.random()*100).toFixed(2)}%;
-      --dur:${dur}; --delay:${delay};
-      --min-op:${minOp}; --max-op:${maxOp};
-    `;
-    fragment.appendChild(s);
+  // ── inject dynamic keyframes sheet ──
+  const styleSheet = document.createElement('style');
+  document.head.appendChild(styleSheet);
+  let kfIndex = 0;
+  function addKeyframe(name, css) {
+    styleSheet.sheet.insertRule(`@keyframes ${name} { ${css} }`, styleSheet.sheet.cssRules.length);
   }
 
-  // --- METEORS ---
-  const meteorData = [
-    { top:'8%',  left:'15%', rot:'130deg', len:'110px', speed:'2.8s', delay:'0s',    travel:'380px' },
-    { top:'5%',  left:'55%', rot:'138deg', len:'80px',  speed:'3.5s', delay:'1.4s',  travel:'300px' },
-    { top:'3%',  left:'75%', rot:'125deg', len:'130px', speed:'2.2s', delay:'3.1s',  travel:'450px' },
-    { top:'12%', left:'35%', rot:'132deg', len:'70px',  speed:'4.0s', delay:'5.2s',  travel:'260px' },
-    { top:'2%',  left:'88%', rot:'142deg', len:'95px',  speed:'3.1s', delay:'7.5s',  travel:'340px' },
-    { top:'6%',  left:'42%', rot:'127deg', len:'115px', speed:'2.6s', delay:'10.0s', travel:'400px' },
-    { top:'9%',  left:'68%', rot:'135deg', len:'85px',  speed:'3.8s', delay:'12.3s', travel:'290px' },
+  // ── STARS ──────────────────────────────────────────────
+  const starCount = Math.min(Math.floor((W * H) / 3200), 250);
+  const colorClasses = ['', 's-blue', 's-violet', 's-cyan', 's-warm'];
+
+  for (let i = 0; i < starCount; i++) {
+    const el   = document.createElement('div');
+    const size = Math.random() < 0.08 ? (Math.random() * 1.5 + 2)   // big star
+               : Math.random() < 0.3  ? (Math.random() * 0.8 + 1.2) // medium
+               :                         (Math.random() * 0.7 + 0.3); // tiny
+
+    el.className = 'star ' + colorClasses[Math.floor(Math.random() * colorClasses.length)];
+    if (size > 2)   el.classList.add('s-glow2');
+    else if (size > 1.5) el.classList.add('s-glow');
+
+    const dur   = (Math.random() * 5 + 1.5).toFixed(2);
+    const delay = (Math.random() * 8).toFixed(2);
+    const opMin = (Math.random() * 0.12 + 0.04).toFixed(2);
+    const opMax = (Math.random() * 0.55 + 0.35).toFixed(2);
+
+    el.style.cssText =
+      `width:${size}px;height:${size}px;` +
+      `top:${(Math.random()*100).toFixed(3)}%;` +
+      `left:${(Math.random()*100).toFixed(3)}%;` +
+      `--dur:${dur}s;--delay:${delay}s;` +
+      `--op-min:${opMin};--op-max:${opMax};`;
+    frag.appendChild(el);
+  }
+
+  // ── METEORS (shooting stars) ──────────────────────────
+  // Each meteor gets its own unique keyframe so rotation + travel works correctly
+  const meteorConfigs = [
+    { sx: 10, sy: 5,  angle: 32, len: 120, speed: 2.4, delay: 0,    pause: 6  },
+    { sx: 55, sy: 3,  angle: 28, len: 90,  speed: 1.8, delay: 2.2,  pause: 8  },
+    { sx: 75, sy: 8,  angle: 35, len: 150, speed: 3.0, delay: 4.5,  pause: 7  },
+    { sx: 30, sy: 2,  angle: 25, len: 80,  speed: 2.0, delay: 7.0,  pause: 9  },
+    { sx: 85, sy: 4,  angle: 38, len: 110, speed: 2.6, delay: 10.0, pause: 6  },
+    { sx: 45, sy: 6,  angle: 30, len: 130, speed: 2.2, delay: 13.5, pause: 10 },
+    { sx: 65, sy: 1,  angle: 42, len: 70,  speed: 1.6, delay: 16.0, pause: 7  },
+    { sx: 20, sy: 10, angle: 27, len: 100, speed: 2.8, delay: 19.5, pause: 8  },
   ];
-  meteorData.forEach(m => {
+
+  meteorConfigs.forEach((m, idx) => {
+    const kfName  = `mf${idx}`;
+    const rad     = m.angle * Math.PI / 180;
+    const travelX = Math.cos(rad) * 500;
+    const travelY = Math.sin(rad) * 500;
+    const totalDur = m.speed + m.pause;
+
+    // keyframe: uses translate (not rotate+translateY — avoids the conflict bug)
+    addKeyframe(kfName,
+      `0%   { opacity:0; transform:translate(0,0); }
+       ${((0.05/totalDur)*100).toFixed(1)}% { opacity:1; }
+       ${((m.speed*0.7/totalDur)*100).toFixed(1)}% { opacity:0.8; }
+       ${((m.speed/totalDur)*100).toFixed(1)}% { opacity:0; transform:translate(${travelX}px,${travelY}px); }
+       100% { opacity:0; transform:translate(${travelX}px,${travelY}px); }`
+    );
+
     const el = document.createElement('div');
     el.className = 'meteor';
-    el.style.cssText = `
-      top:${m.top}; left:${m.left};
-      --rot:${m.rot}; --len:${m.len};
-      --speed:${m.speed}; --delay:${m.delay}; --travel:${m.travel};
-    `;
-    fragment.appendChild(el);
+
+    // Visual: rotated container holding the tail gradient
+    const inner = document.createElement('div');
+    inner.style.cssText =
+      `width:2px;height:${m.len}px;` +
+      `background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,0.9) 60%,rgba(255,255,255,1));` +
+      `border-radius:999px;` +
+      `transform:rotate(${m.angle + 90}deg);` +
+      `transform-origin:top left;`;
+
+    el.appendChild(inner);
+    el.style.cssText =
+      `top:${m.sy}%;left:${m.sx}%;` +
+      `animation:${kfName} ${totalDur}s linear ${m.delay}s infinite;`;
+    frag.appendChild(el);
   });
 
-  bg.appendChild(fragment);
+  // ── COMETS (bigger, glowing head + long tail) ─────────
+  const cometConfigs = [
+    { sx: 5,  sy: 8,  angle: 30, tailLen: 220, headSize: 5, speed: 4.5, delay: 1,    pause: 14 },
+    { sx: 60, sy: 2,  angle: 25, tailLen: 280, headSize: 6, speed: 5.0, delay: 8,    pause: 18 },
+    { sx: 80, sy: 12, angle: 35, tailLen: 190, headSize: 4, speed: 3.8, delay: 20,   pause: 22 },
+  ];
+
+  cometConfigs.forEach((c, idx) => {
+    const kfName  = `cf${idx}`;
+    const rad     = c.angle * Math.PI / 180;
+    const travelX = Math.cos(rad) * 700;
+    const travelY = Math.sin(rad) * 700;
+    const totalDur = c.speed + c.pause;
+
+    addKeyframe(kfName,
+      `0%   { opacity:0; transform:translate(0,0); }
+       ${((0.04/totalDur)*100).toFixed(1)}% { opacity:1; }
+       ${((c.speed*0.75/totalDur)*100).toFixed(1)}% { opacity:1; }
+       ${((c.speed/totalDur)*100).toFixed(1)}% { opacity:0; transform:translate(${travelX}px,${travelY}px); }
+       100% { opacity:0; transform:translate(${travelX}px,${travelY}px); }`
+    );
+
+    const comet = document.createElement('div');
+    comet.className = 'comet';
+    comet.style.cssText =
+      `top:${c.sy}%;left:${c.sx}%;` +
+      `animation:${kfName} ${totalDur}s ease-in ${c.delay}s infinite;`;
+
+    // Tail
+    const tail = document.createElement('div');
+    tail.className = 'comet-tail';
+    tail.style.cssText =
+      `width:2px;height:${c.tailLen}px;` +
+      `left:50%;transform:translateX(-50%) rotate(${c.angle + 90}deg);` +
+      `transform-origin:top center;` +
+      `background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(180,210,255,0.15) 40%,rgba(180,210,255,0.6) 80%,rgba(255,255,255,0.9));`;
+
+    // Head
+    const head = document.createElement('div');
+    head.className = 'comet-head';
+    head.style.cssText =
+      `width:${c.headSize}px;height:${c.headSize}px;` +
+      `margin-top:-${c.headSize/2}px;`;
+
+    comet.appendChild(tail);
+    comet.appendChild(head);
+    frag.appendChild(comet);
+  });
+
+  bg.appendChild(frag);
 }
 
 // ============================================================
