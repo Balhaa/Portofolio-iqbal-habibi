@@ -1,0 +1,11 @@
+# Foto profil — disimpan lokal, tidak di-push ke repo
+foto.jpg
+foto.jpeg
+foto.png
+foto.webp
+
+# File temporary
+foto_b64.txt
+
+# VS Code
+.vscode/
