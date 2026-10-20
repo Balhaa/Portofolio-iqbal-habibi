@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -60,11 +60,21 @@
   </script>
 
   <style>
-    * { box-sizing: border-box; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
     body {
       background-color: #020817;
       font-family: '"Plus Jakarta Sans"', sans-serif;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      position: relative;
     }
 
     /* Scrollbar */
@@ -392,6 +402,23 @@
     /* Numbered list item */
     .process-step {
       counter-increment: step;
+    }
+
+    /* Mencegah pergeseran horizontal pada perangkat mobile */
+    [data-aos] {
+      pointer-events: auto !important;
+    }
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    @supports not (overflow-x: clip) {
+      html, body {
+        overflow-x: hidden !important;
+      }
+    }
+    img, svg, video, iframe {
+      max-width: 100%;
     }
   </style>
 </head>
@@ -863,7 +890,7 @@
   <div class="section-divider max-w-5xl mx-auto my-0"></div>
 
   <!-- ==================== CONTACT ==================== -->
-  <section id="contact" class="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+  <section id="contact" class="relative z-10 py-20 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <div class="orb w-64 h-64 bg-indigo-600 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10 pointer-events-none"></div>
 
     <div class="max-w-5xl mx-auto">
@@ -1089,6 +1116,15 @@ const projects = [
     githubUrl: "https://github.com/Balhaa/umkm-gunungsari"
   },
   {
+    title: "Detektor Link Phishing & Pelacak URL",
+    category: "Web App",
+    demoUrl: "https://balhaa.github.io/deteksi-link-phising/detektor_link_phishing_pelacak_url.html",
+    description: "Aplikasi keamanan siber interaktif berbasis React & Tailwind untuk mendeteksi potensi link phishing, melacak redirect rantai URL, serta menganalisis pola domain mencurigakan secara real-time.",
+    image: "auto",
+    tags: ["Cybersecurity", "React", "Tailwind", "URL Tracker", "Phishing"],
+    githubUrl: "https://github.com/Balhaa/deteksi-link-phising"
+  },
+  {
     title: "Tailweb",
     category: "Landing Page",
     demoUrl: "https://tailweb-sepia.vercel.app/",
@@ -1148,6 +1184,8 @@ const skillKeywords = {
   "umkm": { name: "UMKM Web", group: "Frontend" },
   "bisnis": { name: "Bisnis Web", group: "Frontend" },
   "landing page": { name: "Landing Page", group: "Frontend" },
+  "cybersecurity": { name: "Cybersecurity", group: "Security" },
+  "phishing": { name: "Phishing Detection", group: "Security" },
 };
 
 function computeSkillsFromProjects() {
@@ -1710,7 +1748,8 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 700,
     easing: 'ease-out-cubic',
     once: true,
-    offset: 60,
+    offset: 40,
+    disableMutationObserver: false,
   });
 
   initParticles();
