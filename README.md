@@ -91,19 +91,7 @@ Semua akan otomatis:
 
 ---
 
-## 🌐 Deploy ke GitHub Pages
-
-Portfolio ini sudah ready untuk GitHub Pages:
-
-1. Push repo ke GitHub
-2. Buka **Settings** → **Pages**
-3. Pilih branch **main** → **Save**
-4. Portfolio akan online di:
-   ```
-   https://Balhaa.github.io/Portofolio-iqbal-habibi/
-   ```
-
----
+ 
 
 ## 📧 Kontak
 
@@ -120,5 +108,5 @@ MIT License — Bebas digunakan dan dimodifikasi dengan menyertakan kredit.
 
 ---
 
-Dibuat dengan ❤️ oleh **Iqbal Habibi**  
+Dibuat oleh **Iqbal Habibi**  
 Mahasiswa Universitas Muhammadiyah Purwokerto

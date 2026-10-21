@@ -539,7 +539,7 @@
             </div>
             <div class="w-px bg-white/10 self-stretch"></div>
             <div>
-              <div class="stat-num font-display font-bold text-2xl sm:text-3xl gradient-text">2+</div>
+              <div id="stat-years" class="stat-num font-display font-bold text-2xl sm:text-3xl gradient-text">3+</div>
               <div class="text-gray-500 text-xs sm:text-sm mt-0.5">Tahun Belajar</div>
             </div>
             <div class="w-px bg-white/10 self-stretch"></div>
@@ -1777,31 +1777,32 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 function animateCount(el, target, suffix = '') {
   if (!el) return;
+  if (target === 0) {
+    el.textContent = '0' + suffix;
+    return;
+  }
   let current = 0;
-  const step = Math.ceil(target / 40);
+  const step = Math.max(1, Math.ceil(target / 30));
   const timer = setInterval(() => {
     current = Math.min(current + step, target);
     el.textContent = current + suffix;
     if (current >= target) clearInterval(timer);
-  }, 30);
+  }, 25);
 }
 
 function updateStats() {
   const totalProjects = projects.length;
   const uniqueTechs = computeTechIconsFromProjects().length;
+  const years = 3;
 
-  // Animate on viewport
-  const statsEl = document.querySelector('[data-aos-delay="400"]');
-  if (!statsEl) return;
+  const statProjectsEl = document.getElementById('stat-projects');
+  const statTechsEl = document.getElementById('stat-techs');
+  const statYearsEl = document.getElementById('stat-years');
 
-  const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      animateCount(document.getElementById('stat-projects'), totalProjects, '+');
-      animateCount(document.getElementById('stat-techs'), uniqueTechs, '+');
-      observer.disconnect();
-    }
-  }, { threshold: 0.5 });
-  observer.observe(statsEl);
+  // Trigger anim counter langsung realtime
+  if (statProjectsEl) animateCount(statProjectsEl, totalProjects, '+');
+  if (statTechsEl) animateCount(statTechsEl, uniqueTechs, '+');
+  if (statYearsEl) animateCount(statYearsEl, years, '+');
 }
 
 // ============================================================
